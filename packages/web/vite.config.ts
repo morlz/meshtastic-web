@@ -47,7 +47,7 @@ export default defineConfig(({ mode }) => {
             cookieYesScript:
               isProd && env.VITE_COOKIEYES_CLIENT_ID
                 ? // This is for GDPR/CCPA compliance
-                  `<script async src="https://cdn-cookieyes.com/client_data/${env.VITE_COOKIEYES_CLIENT_ID}/script.js"></script>`
+                `<script async src="https://cdn-cookieyes.com/client_data/${env.VITE_COOKIEYES_CLIENT_ID}/script.js"></script>`
                 : "",
           },
         },
@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => {
         "Cross-Origin-Embedder-Policy": "credentialless",
         "X-Content-Type-Options": "nosniff",
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Referrer-Policy": "no-referrer-when-downgrade",
       },
     },
   };

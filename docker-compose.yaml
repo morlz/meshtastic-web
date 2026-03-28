@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: packages/web/infra/Dockerfile
+    container_name: meshtastic-web-prod
+    ports:
+      - "13001:8080"
+    environment:
+      - NODE_ENV=production
+    # Health check verifies nginx is responding
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # Restart policy for production reliability
+    restart: unless-stopped
+    # Security: read-only root filesystem (optional, uncomment if needed)
+    # read_only: true
+    # Resource limits (adjust based on needs)
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  default:
+    driver: bridge
